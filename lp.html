@@ -131,6 +131,7 @@
   .cta h2 .em{color:var(--coral);}
   .cta p{font-size:14px; color:var(--sub); margin-bottom:28px;}
   .cta a{display:block; background:linear-gradient(135deg,#d4725b,var(--coral)); color:#fff; text-decoration:none; font-size:18px; font-weight:800; letter-spacing:.04em; padding:19px; border-radius:100px; box-shadow:0 8px 22px rgba(194,91,63,.32);}
+  .cta a.cta-wait{background:#c7c2ba; box-shadow:none; cursor:default; pointer-events:none; letter-spacing:.02em;}
   .cta .note{font-size:12px; color:var(--sub); margin-top:16px; margin-bottom:0;}
 
   footer{background:var(--ink); color:#b9c0c9; text-align:center; padding:30px 24px; font-size:12px; letter-spacing:.1em;}
@@ -275,8 +276,8 @@
   <section class="cta">
     <h2>まずは、<span class="em">体験</span>してみませんか？</h2>
     <p>ご回答いただいた内容をもとに、ご案内いたします。</p>
-    <a href="https://liff.line.me/2010176625-doN6KYJS">キャンペーンに申し込む</a>
-    <p class="note">所要時間1分・スマホで完結します</p>
+    <a id="ctaBtn" href="https://liff.line.me/2010176625-doN6KYJS">キャンペーンに申し込む</a>
+    <p class="note" id="ctaNote">所要時間1分・スマホで完結します</p>
   </section>
 
   <footer>
@@ -285,5 +286,28 @@
   </footer>
 
 </div>
+<script>
+  (function(){
+    var OPEN = new Date('2026-05-25T21:00:00+09:00');
+    var FORM = 'https://liff.line.me/2010176625-doN6KYJS';
+    var btn = document.getElementById('ctaBtn');
+    var note = document.getElementById('ctaNote');
+    function upd(){
+      if(new Date() < OPEN){
+        btn.classList.add('cta-wait');
+        btn.removeAttribute('href');
+        btn.textContent = '5/25（月）21:00 受付開始';
+        note.textContent = '受付開始まで、もう少々お待ちください';
+      } else {
+        btn.classList.remove('cta-wait');
+        btn.setAttribute('href', FORM);
+        btn.textContent = 'キャンペーンに申し込む';
+        note.textContent = '所要時間1分・スマホで完結します';
+      }
+    }
+    upd();
+    setInterval(upd, 20000);
+  })();
+</script>
 </body>
 </html>

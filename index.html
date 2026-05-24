@@ -74,6 +74,15 @@
     <p class="center" style="color:var(--sub);font-size:14px;">読み込んでいます…</p>
   </section>
 
+  <!-- 受付前 -->
+  <section id="result-before" class="screen">
+    <div class="card center">
+      <div class="result-icon ic-hold">—</div>
+      <h1 style="font-size:20px;">受付開始までお待ちください</h1>
+      <p class="lead" style="margin-top:10px;">お申し込みの受付は<br><strong>5月25日（月）21:00</strong> から開始します。<br>時間になりましたら、もう一度このページを開いてくださいね。</p>
+    </div>
+  </section>
+
   <!-- フォーム -->
   <section id="form-screen" class="screen">
     <div class="brand">Re:che CAMPAIGN</div>
@@ -197,6 +206,7 @@
   const LIFF_ID   = "2010176625-doN6KYJS";          // LINEログイン用 LIFF ID
   const GAS_URL   = "https://script.google.com/macros/s/AKfycbzVu61ZyEfYDb6Gs_kcvZ9Fjtqu246GEPveO2qW0uCHIcWbSC6tdF83V4Cr5NBrypew/exec"; // GASウェブアプリのURL（/exec）
   const LINE_ADD_URL = "https://lin.ee/wdS1TiX";    // 公式LINE 友だち追加URL
+  const OPEN_TIME = new Date('2026-05-25T21:00:00+09:00'); // 受付開始（5/25 21:00 JST）
   // ===============================================
 
   let profile = null;
@@ -223,6 +233,7 @@
         return;
       }
       profile = await liff.getProfile();
+      if (new Date() < OPEN_TIME) { show('result-before'); return; }
       document.getElementById('displayName').value = profile.displayName || '';
       show('form-screen');
     }catch(e){
@@ -263,6 +274,7 @@
         body: JSON.stringify(payload)
       });
       const data = await res.json();
+      if(data.status === '受付前'){ show('result-before'); return; }
       if(data.status === '満員'){ show('result-full'); return; }
       if(data.status === '見送り'){ show('result-hold'); return; }
       if(data.status === '承認'){
