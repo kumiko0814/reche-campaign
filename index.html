@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Re:che キャンペーン お申し込み</title>
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<style>
+  :root{
+    --ink:#1a1a1a; --sub:#5a5a5a; --bg:#fafaf7; --card:#ffffff;
+    --line:#e6e3dc; --accent:#c25b3f; --forest:#1f6f5e; --soft:#f3efe7;
+    --hotbg:#fff8f4; --hotborder:#f0d6c8; --line-green:#06c755;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Yu Gothic","YuGothic","游ゴシック","Hiragino Kaku Gothic ProN",sans-serif;
+    line-height:1.7; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:560px; margin:0 auto; padding:28px 20px 64px;}
+  .brand{font-size:13px; letter-spacing:.18em; color:var(--forest); font-weight:700; text-align:center; margin-bottom:6px;}
+  h1{font-size:22px; font-weight:800; letter-spacing:.02em; text-align:center; margin:0 0 4px;}
+  .lead{font-size:14px; color:var(--sub); text-align:center; margin:0 auto 24px; max-width:420px;}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px 20px; margin-bottom:18px;}
+  .field{margin-bottom:20px;}
+  .field:last-child{margin-bottom:0;}
+  label.q{display:block; font-size:14px; font-weight:700; margin-bottom:8px;}
+  .req{color:var(--accent); font-size:12px; margin-left:6px; font-weight:700;}
+  input[type=text], input[type=email], select{
+    width:100%; padding:12px 14px; font-size:15px; color:var(--ink);
+    border:1px solid var(--line); border-radius:10px; background:#fff;
+    font-family:inherit;
+  }
+  input:focus, select:focus{outline:none; border-color:var(--forest); box-shadow:0 0 0 3px rgba(31,111,94,.12);}
+  .readonly{background:var(--soft); color:var(--sub);}
+  .hint{font-size:12px; color:var(--sub); margin-top:6px;}
+  .stance label{
+    display:flex; align-items:flex-start; gap:10px; padding:14px;
+    border:1px solid var(--line); border-radius:10px; margin-bottom:10px; cursor:pointer;
+    transition:.15s;
+  }
+  .stance label:hover{border-color:var(--forest);}
+  .stance input{margin-top:3px;}
+  .stance .t{font-weight:700; font-size:14px; display:block;}
+  .stance .d{font-size:12px; color:var(--sub); margin-top:2px; display:block;}
+  .stance label.sel{border-color:var(--forest); background:#f4faf8;}
+  .btn{
+    width:100%; padding:15px; font-size:16px; font-weight:800; letter-spacing:.04em;
+    border:none; border-radius:12px; cursor:pointer; font-family:inherit;
+  }
+  .btn-primary{background:var(--forest); color:#fff;}
+  .btn-primary:disabled{background:#b7c8c3; cursor:not-allowed;}
+  .btn-line{background:var(--line-green); color:#fff; display:block; text-align:center; text-decoration:none; margin-top:18px;}
+  .note{font-size:12px; color:var(--sub); text-align:center; margin-top:14px;}
+  .screen{display:none;}
+  .screen.on{display:block;}
+  .center{text-align:center;}
+  .result-icon{width:56px; height:56px; border-radius:50%; margin:0 auto 16px; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800;}
+  .ic-pass{background:#eaf5f1; color:var(--forest);}
+  .ic-hold{background:var(--soft); color:var(--sub);}
+  .ic-full{background:var(--hotbg); color:var(--accent); border:1px solid var(--hotborder);}
+  .err{color:var(--accent); font-size:13px; margin-top:10px; text-align:center; min-height:18px;}
+  .spinner{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--forest);border-radius:50%;animation:sp .8s linear infinite;margin:40px auto;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 読み込み中 -->
+  <section id="loading" class="screen on">
+    <div class="spinner"></div>
+    <p class="center" style="color:var(--sub);font-size:14px;">読み込んでいます…</p>
+  </section>
+
+  <!-- フォーム -->
+  <section id="form-screen" class="screen">
+    <div class="brand">Re:che CAMPAIGN</div>
+    <h1>キャンペーン お申し込み</h1>
+    <p class="lead">ご参加にあたって、いくつか教えてください。<br>すべてご回答いただいた方をご案内します。</p>
+
+    <form id="entry-form">
+      <div class="card">
+        <div class="field">
+          <label class="q">LINE名<span class="req">自動取得</span></label>
+          <input type="text" id="displayName" class="readonly" readonly />
+          <p class="hint">LINEのお名前を自動で取得しています。</p>
+        </div>
+        <div class="field">
+          <label class="q" for="realName">本名<span class="req">必須</span></label>
+          <input type="text" id="realName" placeholder="例）山田 花子" required />
+        </div>
+        <div class="field">
+          <label class="q" for="email">メールアドレス<span class="req">必須</span></label>
+          <input type="email" id="email" placeholder="例）hanako@example.com" required />
+        </div>
+        <div class="field">
+          <label class="q" for="ageGroup">年代<span class="req">必須</span></label>
+          <select id="ageGroup" required>
+            <option value="" disabled selected>選択してください</option>
+            <option>20代前半</option>
+            <option>20代後半</option>
+            <option>30代前半</option>
+            <option>30代後半</option>
+            <option>40代</option>
+            <option>その他</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="q" for="status">現在のご状況<span class="req">必須</span></label>
+          <select id="status" required>
+            <option value="" disabled selected>選択してください</option>
+            <option>会社員（正社員）</option>
+            <option>会社員（派遣・契約）</option>
+            <option>パート・アルバイト</option>
+            <option>主婦・主夫</option>
+            <option>育休中</option>
+            <option>フリーランス・自営</option>
+            <option>その他</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="field stance">
+          <label class="q" style="margin-bottom:12px;">Re:cheスクールについて、今のお気持ちにいちばん近いものは？<span class="req">必須</span></label>
+          <label data-v="スクールを検討している">
+            <input type="radio" name="school" value="スクールを検討している" required />
+            <span><span class="t">スクールを検討している</span></span>
+          </label>
+          <label data-v="スクールについてはまだ迷い中">
+            <input type="radio" name="school" value="スクールについてはまだ迷い中" />
+            <span><span class="t">スクールについてはまだ迷い中</span></span>
+          </label>
+          <label data-v="スクールについては考えていない">
+            <input type="radio" name="school" value="スクールについては考えていない" />
+            <span><span class="t">スクールについては考えていない</span></span>
+          </label>
+        </div>
+        <div class="field stance">
+          <label class="q" style="margin-bottom:12px;">このキャンペーンへの参加について、いちばん近いお気持ちは？<span class="req">必須</span></label>
+          <label data-v="本気でやりきりたい">
+            <input type="radio" name="stance" value="本気でやりきりたい" required />
+            <span><span class="t">本気でやりきりたい</span><span class="d">期間中しっかり取り組みたい</span></span>
+          </label>
+          <label data-v="できる範囲で頑張りたい">
+            <input type="radio" name="stance" value="できる範囲で頑張りたい" />
+            <span><span class="t">できる範囲で頑張りたい</span><span class="d">無理のないペースで参加したい</span></span>
+          </label>
+          <label data-v="まずは様子を見たい">
+            <input type="radio" name="stance" value="まずは様子を見たい" />
+            <span><span class="t">まずは様子を見たい</span><span class="d">今回は情報だけ知りたい</span></span>
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" id="submitBtn" class="btn btn-primary">この内容で申し込む</button>
+      <div class="err" id="errMsg"></div>
+      <p class="note">いただいた情報はキャンペーン運営の目的にのみ使用します。</p>
+    </form>
+  </section>
+
+  <!-- 合格：公式LINE追加 -->
+  <section id="result-pass" class="screen">
+    <div class="card center">
+      <div class="result-icon ic-pass">OK</div>
+      <h1 style="font-size:20px;">お申し込みありがとうございます</h1>
+      <p class="lead" style="margin-top:10px;">最後に、下のボタンから公式LINEを追加してください。<br>こちらからご案内をお送りします。</p>
+      <a id="lineAddBtn" class="btn btn-line" href="#" target="_blank" rel="noopener">公式LINEを追加する</a>
+      <p class="note">※追加が完了すると、ご案内の準備が整います。</p>
+    </div>
+  </section>
+
+  <!-- 見送り -->
+  <section id="result-hold" class="screen">
+    <div class="card center">
+      <div class="result-icon ic-hold">―</div>
+      <h1 style="font-size:20px;">ご回答ありがとうございました</h1>
+      <p class="lead" style="margin-top:10px;">今回のキャンペーンは、期間中いっしょに取り組める方を対象にご案内しています。<br>次の機会には、ぜひあらためてご検討くださいね。</p>
+    </div>
+  </section>
+
+  <!-- 満員 -->
+  <section id="result-full" class="screen">
+    <div class="card center">
+      <div class="result-icon ic-full">満</div>
+      <h1 style="font-size:20px;">定員に達しました</h1>
+      <p class="lead" style="margin-top:10px;">たくさんのお申し込みをありがとうございました。<br>今回の募集は定員（100名）に達したため、受付を終了しました。</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // ===== 設定（くみこ作業：ここ3つを差し替え）=====
+  const LIFF_ID   = "____LIFF_ID____";              // LINEログイン用 LIFF ID
+  const GAS_URL   = "____GAS_WEBAPP_URL____";       // GASウェブアプリのURL（/exec）
+  const LINE_ADD_URL = "____LINE_FRIEND_URL____";   // 公式LINE 友だち追加URL
+  // ===============================================
+
+  let profile = null;
+
+  function show(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+    document.getElementById(id).classList.add('on');
+  }
+
+  // ラジオ選択の見た目（グループ=name単位で切り替え）
+  document.querySelectorAll('.stance label[data-v]').forEach(l=>{
+    l.addEventListener('click',()=>{
+      var name = l.querySelector('input').name;
+      document.querySelectorAll('.stance input[name="'+name+'"]').forEach(x=>x.closest('label').classList.remove('sel'));
+      l.classList.add('sel');
+    });
+  });
+
+  async function main(){
+    try{
+      await liff.init({ liffId: LIFF_ID });
+      if(!liff.isLoggedIn()){
+        liff.login({ redirectUri: window.location.href });
+        return;
+      }
+      profile = await liff.getProfile();
+      document.getElementById('displayName').value = profile.displayName || '';
+      show('form-screen');
+    }catch(e){
+      // LIFF未設定でも画面確認できるようフォールバック表示
+      document.getElementById('displayName').value = '(LINE未接続：テスト表示)';
+      show('form-screen');
+      console.error(e);
+    }
+  }
+
+  document.getElementById('entry-form').addEventListener('submit', async (ev)=>{
+    ev.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const err = document.getElementById('errMsg');
+    err.textContent = '';
+
+    const schoolEl = document.querySelector('input[name="school"]:checked');
+    if(!schoolEl){ err.textContent='スクールについてのお気持ちを選んでください。'; return; }
+    const stanceEl = document.querySelector('input[name="stance"]:checked');
+    if(!stanceEl){ err.textContent='参加へのお気持ちを選んでください。'; return; }
+
+    const payload = {
+      userId:         profile ? profile.userId : '',
+      displayName:    document.getElementById('displayName').value,
+      realName:       document.getElementById('realName').value.trim(),
+      email:          document.getElementById('email').value.trim(),
+      ageGroup:       document.getElementById('ageGroup').value,
+      situation:      document.getElementById('status').value,
+      schoolInterest: schoolEl.value,
+      stance:         stanceEl.value
+    };
+
+    btn.disabled = true; btn.textContent = '送信中…';
+    try{
+      const res = await fetch(GAS_URL, {
+        method:'POST',
+        headers:{'Content-Type':'text/plain;charset=utf-8'}, // CORSプリフライト回避
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if(data.status === '満員'){ show('result-full'); return; }
+      if(data.status === '見送り'){ show('result-hold'); return; }
+      if(data.status === '承認'){
+        document.getElementById('lineAddBtn').href = LINE_ADD_URL;
+        show('result-pass'); return;
+      }
+      throw new Error(data.message || '不明な応答');
+    }catch(e){
+      console.error(e);
+      err.textContent = '送信に失敗しました。通信環境を確認して、もう一度お試しください。';
+      btn.disabled = false; btn.textContent = 'この内容で申し込む';
+    }
+  });
+
+  main();
+</script>
+</body>
+</html>
