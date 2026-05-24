@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Re:che 体験キャンペーン</title>
+<style>
+  :root{
+    --ink:#28313d;          /* 濃紺チャコール */
+    --sub:#6b7480;
+    --white:#ffffff;
+    --line:#e6e3dc;
+    --coral:#c25b3f;        /* Merone Terracotta（くすみコーラル） */
+    --coral-soft:#e3a294;   /* 淡いコーラル */
+    --pink-bg:#fdeee9;      /* くすみピンク背景 */
+    --pink-band:#f7ddd4;    /* ピンク帯 */
+    --sky:#5f83aa;          /* ブルーアクセント */
+    --sky-ink:#42617f;
+    --sky-bg:#eaf2fb;       /* 薄いブルー背景 */
+    --sky-band:#d6e6f5;     /* ブルー帯 */
+    --forest:#1f6f5e;       /* Deep Forest（前向き） */
+    --soft:#f3efe7;
+    --line-green:#06c755;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--white); color:var(--ink);
+    font-family:"Yu Gothic","YuGothic","游ゴシック","Hiragino Kaku Gothic ProN",sans-serif;
+    line-height:1.85; -webkit-font-smoothing:antialiased; font-size:15px;
+  }
+  .wrap{max-width:600px; margin:0 auto; overflow:hidden;}
+  .section{padding:52px 24px;}
+  .center{text-align:center;}
+
+  /* 見出し共通 */
+  .eyebrow{font-size:12px; letter-spacing:.22em; font-weight:800; margin-bottom:12px;}
+  .eyebrow.c-sky{color:var(--sky);}
+  .eyebrow.c-coral{color:var(--coral);}
+  .sec-title{font-size:23px; font-weight:800; letter-spacing:.03em; line-height:1.5;}
+  .sec-title .em{color:var(--coral);}
+  .sec-title .mk{background:linear-gradient(transparent 62%, var(--pink-band) 62%); padding:0 4px;}
+  .rule{width:44px; height:3px; background:var(--coral); margin:18px auto 0; border:none; border-radius:3px;}
+
+  /* ヒーロー */
+  .hero{
+    padding:60px 24px 56px; text-align:center;
+    background:linear-gradient(155deg, var(--sky-bg) 0%, #f4f1f6 52%, var(--pink-bg) 100%);
+    position:relative;
+  }
+  .hero .brand{
+    display:inline-block; font-size:12px; letter-spacing:.3em; color:var(--sky);
+    font-weight:800; margin-bottom:22px; padding:6px 16px; background:rgba(255,255,255,.7);
+    border-radius:100px;
+  }
+  .hero h1{font-size:29px; font-weight:800; letter-spacing:.03em; line-height:1.5; margin-bottom:20px;}
+  .hero h1 .mk-sky{background:linear-gradient(transparent 60%, var(--sky-band) 60%);}
+  .hero h1 .mk-pink{background:linear-gradient(transparent 60%, var(--pink-band) 60%);}
+  .hero h1 .em{color:var(--coral);}
+  .hero p{font-size:15px; color:var(--sub); line-height:2;}
+  .hero .period{
+    display:inline-block; margin-top:26px; padding:10px 22px;
+    background:#fff; border:1.5px solid var(--coral-soft); border-radius:100px;
+    font-size:13.5px; font-weight:800; color:var(--coral); letter-spacing:.03em;
+  }
+
+  /* イントロ */
+  .intro{background:var(--white); border-bottom:1px solid var(--line);}
+  .intro p{font-size:16px; line-height:2.1; text-align:center;}
+  .intro strong{color:var(--coral);}
+
+  /* メリット（淡ピンク背景） */
+  .merits{background:var(--pink-bg);}
+  .merit{display:flex; gap:16px; align-items:flex-start; background:#fff; border-radius:16px; padding:24px 20px; margin-bottom:16px; box-shadow:0 6px 20px rgba(194,91,63,.07);}
+  .merit:last-child{margin-bottom:0;}
+  .merit .no{font-size:30px; font-weight:800; color:var(--coral); line-height:1; min-width:42px; font-family:"Times New Roman",serif;}
+  .merit h3{font-size:16px; font-weight:800; line-height:1.55; margin-bottom:6px;}
+  .merit p{font-size:13.5px; color:var(--sub); line-height:1.85;}
+  .merit strong{color:var(--coral);}
+
+  /* スクショ（淡ブルー背景） */
+  .shots{background:var(--sky-bg);}
+  .shot{margin-bottom:30px;}
+  .shot:last-child{margin-bottom:0;}
+  .shot .ph{
+    border:1.5px dashed #aac2dd; border-radius:14px; background:#fff;
+    min-height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    color:var(--sky-ink); font-size:13px; text-align:center; padding:24px; gap:6px; font-weight:700;
+  }
+  .shot .ph small{font-weight:400; color:var(--sub);}
+  .shot img{width:100%; border-radius:14px; border:1px solid var(--line); display:block; box-shadow:0 8px 24px rgba(66,97,127,.12);}
+  .shot figcaption{margin-top:14px; font-size:14.5px; font-weight:800; text-align:center;}
+  .shot .cap-sub{display:block; font-size:12.5px; color:var(--sub); font-weight:400; margin-top:3px;}
+
+  /* スケジュール（白） */
+  .schedule{background:var(--white);}
+  .tl{position:relative; margin-top:8px; padding-left:24px;}
+  .tl::before{content:""; position:absolute; left:5px; top:6px; bottom:6px; width:2px; background:var(--sky-band);}
+  .tl-item{position:relative; padding:0 0 22px 4px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{content:""; position:absolute; left:-23px; top:4px; width:12px; height:12px; border-radius:50%; background:var(--sky); border:2px solid #fff; box-shadow:0 0 0 1px var(--sky);}
+  .tl-item.key::before{background:var(--coral); box-shadow:0 0 0 1px var(--coral);}
+  .tl-date{font-size:12.5px; font-weight:800; color:var(--coral); letter-spacing:.03em;}
+  .tl-name{font-size:15px; font-weight:800; margin-top:1px;}
+  .tl-desc{font-size:12.5px; color:var(--sub); margin-top:2px;}
+  .events{margin-top:24px; background:var(--sky-bg); border-radius:14px; padding:20px 22px;}
+  .events .lbl{font-size:12px; letter-spacing:.1em; color:var(--sky); font-weight:800; margin-bottom:10px;}
+  .events ul{list-style:none;}
+  .events li{font-size:14.5px; padding:6px 0 6px 20px; position:relative; font-weight:700;}
+  .events li::before{content:""; position:absolute; left:0; top:14px; width:7px; height:7px; border-radius:50%; background:var(--coral);}
+
+  /* おすすめ（淡ブルー背景） */
+  .reco{background:var(--sky-bg);}
+  .reco .box{background:#fff; border-radius:16px; padding:26px 22px; box-shadow:0 6px 20px rgba(66,97,127,.08);}
+  .reco .box h3{font-size:17px; font-weight:800; color:var(--sky-ink); margin-bottom:16px; text-align:center;}
+  .reco li{list-style:none; font-size:15px; padding:11px 0 11px 32px; position:relative; line-height:1.6; border-bottom:1px dashed var(--sky-band); font-weight:700;}
+  .reco li:last-child{border-bottom:none;}
+  .reco li::before{content:"○"; position:absolute; left:4px; top:11px; color:var(--sky); font-weight:800; font-size:15px;}
+
+  /* お断り（淡ピンク背景） */
+  .decline{background:var(--pink-bg);}
+  .decline .box{background:#fff; border-radius:16px; padding:26px 22px; box-shadow:0 6px 20px rgba(194,91,63,.06);}
+  .decline .box h3{font-size:17px; font-weight:800; color:var(--coral); margin-bottom:16px; text-align:center;}
+  .decline li{list-style:none; font-size:15px; padding:11px 0 11px 32px; position:relative; line-height:1.6; border-bottom:1px dashed var(--pink-band); color:var(--sub); font-weight:600;}
+  .decline li:last-child{border-bottom:none;}
+  .decline li::before{content:"×"; position:absolute; left:5px; top:11px; color:var(--coral); font-weight:800; font-size:15px;}
+
+  /* CTA */
+  .cta{background:linear-gradient(155deg, var(--pink-bg) 0%, #f4f1f6 50%, var(--sky-bg) 100%); text-align:center; padding:58px 24px 66px;}
+  .cta h2{font-size:23px; font-weight:800; line-height:1.5; margin-bottom:10px;}
+  .cta h2 .em{color:var(--coral);}
+  .cta p{font-size:14px; color:var(--sub); margin-bottom:28px;}
+  .cta a{display:block; background:linear-gradient(135deg,#d4725b,var(--coral)); color:#fff; text-decoration:none; font-size:18px; font-weight:800; letter-spacing:.04em; padding:19px; border-radius:100px; box-shadow:0 8px 22px rgba(194,91,63,.32);}
+  .cta .note{font-size:12px; color:var(--sub); margin-top:16px; margin-bottom:0;}
+
+  footer{background:var(--ink); color:#b9c0c9; text-align:center; padding:30px 24px; font-size:12px; letter-spacing:.1em;}
+  footer .lg{font-size:16px; letter-spacing:.3em; color:#fff; font-weight:700; margin-bottom:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="brand">Re:che CAMPAIGN</div>
+    <h1>おうちで、自分のペースで。<br><span class="em mk-pink">"もうひとつの収入"</span>を、<br><span class="mk-sky">まず体験する。</span></h1>
+    <p>いきなり決めなくて大丈夫。<br>本気で取り組む1週間を、まず体験してみませんか。</p>
+    <div class="period">開催：2026年6月1日（月）〜 6月9日（火）</div>
+  </header>
+
+  <!-- INTRO -->
+  <section class="section intro">
+    <p>「興味はあるけど、自分にできるか不安」<br>「体験してから、ちゃんと決めたい」<br><br>そんな方のための、<strong>体験キャンペーン</strong>です。</p>
+  </section>
+
+  <!-- MERITS -->
+  <section class="section merits">
+    <div class="center">
+      <div class="eyebrow c-coral">CAMPAIGN MERIT</div>
+      <h2 class="sec-title">このキャンペーンで<br><span class="mk">得られること</span></h2>
+      <hr class="rule" />
+    </div>
+    <div style="margin-top:32px;">
+      <div class="merit">
+        <div class="no">01</div>
+        <div>
+          <h3>応援のボイスメッセージで、モチベーションが続く</h3>
+          <p>ひとりでは続かないことも、講師や仲間の声があるから走り切れる。毎日の励みになります。</p>
+        </div>
+      </div>
+      <div class="merit">
+        <div class="no">02</div>
+        <div>
+          <h3>売れている人が"具体的に何をしているか"わかる</h3>
+          <p>成果を出している方のリアルな工夫が見える。さらに<strong>月報も公開</strong>。数字の裏側まで学べます。</p>
+        </div>
+      </div>
+      <div class="merit">
+        <div class="no">03</div>
+        <div>
+          <h3>講師から毎日アドバイスがもらえる</h3>
+          <p>講師「のん」をはじめ、日々の取り組みに直接アドバイス。つまずいても、すぐに相談できます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOTS -->
+  <section class="section shots">
+    <div class="center">
+      <div class="eyebrow c-sky">REAL VOICE</div>
+      <h2 class="sec-title">参加者の、<span class="em">リアルな毎日</span></h2>
+      <hr class="rule" />
+    </div>
+    <div style="margin-top:32px;">
+      <figure class="shot">
+        <img src="images/S__44146810_0.jpg" alt="講師からの応援メッセージ">
+        <figcaption>毎朝届く、講師からの応援メッセージ<span class="cap-sub">「諦めなかった人が結果を持っていく」</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="images/S__44146809_0.jpg" alt="参加者の成果報告">
+        <figcaption>仲間の成果が、毎日シェアされる<span class="cap-sub">「売れました！」の報告が飛び交う場</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="images/S__44146808_0.jpg" alt="参加者の月報">
+        <figcaption>売れている人の"数字"まで公開<span class="cap-sub">目標・売上・利益が見えるから、自分の指針になる</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section class="section schedule">
+    <div class="center">
+      <div class="eyebrow c-sky">SCHEDULE</div>
+      <h2 class="sec-title">スケジュール</h2>
+      <hr class="rule" />
+    </div>
+    <div class="tl" style="margin-top:32px;">
+      <div class="tl-item key">
+        <div class="tl-date">5月27日（水）</div>
+        <div class="tl-name">月一講座（入賞者発表）</div>
+        <div class="tl-desc">キャンペーンのキックオフ。前回の入賞者を発表します。</div>
+      </div>
+      <div class="tl-item key">
+        <div class="tl-date">6月1日（月）</div>
+        <div class="tl-name">キャンペーン スタート</div>
+        <div class="tl-desc">いよいよ本番の1週間がはじまります。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">6月1日（月）〜 9日（火）</div>
+        <div class="tl-name">期間中のイベント</div>
+        <div class="tl-desc">出品作業会・勉強会・講座を開催。週報で進捗を共有します。</div>
+      </div>
+      <div class="tl-item key">
+        <div class="tl-date">6月9日（火）</div>
+        <div class="tl-name">キャンペーン 終了</div>
+        <div class="tl-desc">最後まで走り切りましょう。</div>
+      </div>
+    </div>
+    <div class="events">
+      <div class="lbl">期間中に開催</div>
+      <ul>
+        <li>出品作業会</li>
+        <li>勉強会</li>
+        <li>講座</li>
+        <li>週報提出（進捗の共有）</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- RECOMMEND -->
+  <section class="section reco">
+    <div class="box">
+      <h3>こんな方におすすめ</h3>
+      <ul>
+        <li>スクールについて、まだ迷っている方</li>
+        <li>体験した上で、スクールに参加したい方</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- DECLINE -->
+  <section class="section decline">
+    <div class="box">
+      <h3>こんな方にはおすすめできません</h3>
+      <ul>
+        <li>スクールに興味がない方</li>
+        <li>ルールを守れない方</li>
+        <li>参加意欲が低い方</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>まずは、<span class="em">体験</span>してみませんか？</h2>
+    <p>ご回答いただいた内容をもとに、ご案内いたします。</p>
+    <a href="https://liff.line.me/2010176625-doN6KYJS">キャンペーンに申し込む</a>
+    <p class="note">所要時間1分・スマホで完結します</p>
+  </section>
+
+  <footer>
+    <div class="lg">Re:che</div>
+    <div>produced by Merone</div>
+  </footer>
+
+</div>
+</body>
+</html>

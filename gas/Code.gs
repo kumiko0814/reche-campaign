@@ -63,6 +63,15 @@ function doPost(e) {
     lock.waitLock(10000); // 同時送信での定員カウントずれを防止
 
     var data = JSON.parse(e.postData.contents);
+
+    // 管理コマンド：テストデータを全消去（ヘッダーは残す）。テスト時のみ使用
+    if (data.admin === 'RESET_2026') {
+      var resetSheet = getOrCreateSheet_();
+      var lastRow = resetSheet.getLastRow();
+      if (lastRow > 1) resetSheet.deleteRows(2, lastRow - 1);
+      return json({ result: 'ok', cleared: Math.max(0, lastRow - 1) });
+    }
+
     var sheet = getOrCreateSheet_(); // 手動setup不要・自動でスプシ用意
     var values = sheet.getDataRange().getValues(); // 1行目ヘッダ
 
@@ -78,14 +87,12 @@ function doPost(e) {
       }
     }
 
-    // 判定：参加姿勢が様子見、またはスクールを考えていない人=見送り。
-    // それ以外=承認。ただし定員超過は満員
+    // 判定：参加姿勢が様子見、またはスクールを考えていない人=見送り。それ以外=承認。
+    // （定員制限なし：100名を超えても承認し続ける）
     var status;
     if (data.stance === 'まずは様子を見たい' ||
         data.schoolInterest === 'スクールについては考えていない') {
       status = '見送り';
-    } else if (approvedCount >= CAPACITY) {
-      status = '満員';
     } else {
       status = '承認';
     }
