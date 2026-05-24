@@ -17,13 +17,13 @@ var DEFINEITION_HEADERS = [
 var SHEET_NAME = '応募者';
 var CAPACITY = 100; // 定員
 
-/** 初回セットアップ：スプシを作成しIDを保存する（GASエディタで1回だけ実行）*/
-function setup() {
+/** スプシを取得（なければ自動作成＋ヘッダ整備）。手動setup不要・doGet/doPostから自動で呼ばれる */
+function getOrCreateSheet_() {
   var props = PropertiesService.getScriptProperties();
-  var existing = props.getProperty('SHEET_ID');
+  var sheetId = props.getProperty('SHEET_ID');
   var ss;
-  if (existing) {
-    ss = SpreadsheetApp.openById(existing);
+  if (sheetId) {
+    ss = SpreadsheetApp.openById(sheetId);
   } else {
     ss = SpreadsheetApp.create('Re:che キャンペーン応募者管理（2026年5-6月）');
     props.setProperty('SHEET_ID', ss.getId());
@@ -38,14 +38,21 @@ function setup() {
       .setFontColor('#ffffff');
     sheet.setFrozenRows(1);
   }
-  Logger.log('スプシ作成完了 ▶ ' + ss.getUrl());
-  return ss.getUrl();
+  return sheet;
+}
+
+/** 動作確認＆スプシURL取得（任意・自動化では使わない）*/
+function setup() {
+  var url = getOrCreateSheet_().getParent().getUrl();
+  Logger.log('スプシ ▶ ' + url);
+  return url;
 }
 
 /** 動作確認用 */
 function doGet() {
+  var sheet = getOrCreateSheet_(); // 初回GETでスプシ自動作成＆スコープ認可
   return ContentService
-    .createTextOutput(JSON.stringify({ result: 'ok', message: 'Re:che campaign endpoint is alive' }))
+    .createTextOutput(JSON.stringify({ result: 'ok', message: 'alive', sheetUrl: sheet.getParent().getUrl() }))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -56,11 +63,7 @@ function doPost(e) {
     lock.waitLock(10000); // 同時送信での定員カウントずれを防止
 
     var data = JSON.parse(e.postData.contents);
-    var props = PropertiesService.getScriptProperties();
-    var sheetId = props.getProperty('SHEET_ID');
-    if (!sheetId) throw new Error('SHEET_ID未設定：先にsetup()を実行してください');
-
-    var sheet = SpreadsheetApp.openById(sheetId).getSheetByName(SHEET_NAME);
+    var sheet = getOrCreateSheet_(); // 手動setup不要・自動でスプシ用意
     var values = sheet.getDataRange().getValues(); // 1行目ヘッダ
 
     // 重複チェック（同一userId）＋承認者カウント
@@ -85,6 +88,11 @@ function doPost(e) {
       status = '満員';
     } else {
       status = '承認';
+    }
+
+    // テストモード：判定結果だけ返してスプシには保存しない
+    if (data.test === true) {
+      return json({ result: 'ok', status: status, test: true });
     }
 
     sheet.appendRow([
